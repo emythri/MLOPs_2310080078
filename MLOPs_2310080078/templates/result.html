@@ -1,0 +1,81 @@
+<html lang="en" dir="ltr">
+<head>
+  <meta charset="utf-8">
+  <title>Glass Prediction Result</title>
+</head>
+<body>
+  <h1>Result</h1>
+
+  <h3>Data entered is: {{ lis }}</h3>
+
+  <h3>The Category of the Glass is: {{ ans }}</h3>
+
+  <pre>
+      Type of glass: (class attribute)
+              -- 1 buildingwindowsfloatprocessed
+              -- 2 buildingwindowsnonfloatprocessed
+              -- 3 vehiclewindowsfloatprocessed
+              -- 4 vehiclewindowsnonfloatprocessed (none in this database)
+              -- 5 containers
+              -- 6 tableware
+              -- 7 headlamps
+  </pre>
+
+  <h3>
+    Prediction Result:
+    {% if ans == 1 or ans == '1' %}
+      Building Windows Float Processed
+    {% elif ans == 2 or ans == '2' %}
+      Building Windows Non-Float Processed
+    {% elif ans == 3 or ans == '3' %}
+      Vehicle Windows Float Processed
+    {% elif ans == 4 or ans == '4' %}
+      Vehicle Windows Non-Float Processed
+    {% elif ans == 5 or ans == '5' %}
+      Containers
+    {% elif ans == 6 or ans == '6' %}
+      Tableware
+    {% elif ans == 7 or ans == '7' %}
+      Headlamps
+    {% else %}
+      Unknown Glass Type
+    {% endif %}
+  </h3>
+  
+  <a href="{% url 'home' %}">Go to Home</a>
+
+
+</body>
+</html>
+
+
+
+<!-- <html lang='en' dir='ltr'>
+<head>
+  <meta charset="utf-8">
+  <title></title>
+  </head>
+  <body>
+    <h1>Result<h1>
+
+    <h3>Data entered is : {{lis}} </h3>
+
+    <h3>The Category of the Glass is {{ans}}</h3>
+
+
+    <pre>
+        Type of glass: (class attribute)
+                -- 1 buildingwindowsfloatprocessed
+                -- 2 buildingwindowsnonfloatprocessed
+                -- 3 vehiclewindowsfloatprocessed
+                -- 4 vehiclewindowsnonfloatprocessed (none in this database)
+                -- 5 containers
+                -- 6 tableware
+                -- 7 headlamps
+      </pre>
+
+
+
+    The result is {{ans}}
+  <body>
+</html> -->
