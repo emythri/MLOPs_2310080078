@@ -1,42 +1,202 @@
 <html lang="en" dir="ltr">
 <head>
-  <meta charset="utf-3">
+  <meta charset="utf-8">
   <title>Home Page</title>
+  <style>
+    .error {
+      color: red;
+    }
+
+    h1 {
+      font-size: 16px; /* Reducing the font size */
+    }
+  </style>
 </head>
 <body>
-  <h1>Enter the referactive Indexes of Materials</h1>
 
-  <form action="{% url 'result' %}" method="POST">
+  <form action="{% url 'result' %}" method="POST" onsubmit="return validateForm()">
     {% csrf_token %}
 
-    RI: <input type="text" required name="RI"> <br><br>
-    Na: <input type="text" required name="Na"> <br><br>
-    Mg: <input type="text" required name="Mg"> <br><br>
-    Al: <input type="text" required name="Al"> <br><br>
-    Si: <input type="text" required name="Si"> <br><br>
-    K: <input type="text" required name="K"> <br><br>
-    Ca: <input type="text" required name="Ca"> <br><br>
-    Ba: <input type="text" required name="Ba"> <br><br>
-    Fe: <input type="text" required name="Fe"> <br><br>
+    <h1>RI Range: 1.0 to 3.5</h1>
+    RI: <input type="number" id="RI" name="RI" required min="1.0" max="3.5" step="0.01">
+    <span class="error" id="RI-error"></span><br><br>
+
+    <h1>Na Range: 1.3 to 1.5</h1>
+    Na: <input type="number" id="Na" name="Na" required min="1.3" max="1.5" step="0.01">
+    <span class="error" id="Na-error"></span><br><br>
+
+    <h1>Mg Range: 1.4 to 1.7</h1>
+    Mg: <input type="number" id="Mg" name="Mg" required min="1.4" max="1.7" step="0.01">
+    <span class="error" id="Mg-error"></span><br><br>
+
+    <h1>Al Range: 1.75 to 1.78</h1>
+    Al: <input type="number" id="Al" name="Al" required min="1.75" max="1.78" step="0.01">
+    <span class="error" id="Al-error"></span><br><br>
+
+    <h1>Si Range: 3.4 to 3.5</h1>
+    Si: <input type="number" id="Si" name="Si" required min="3.4" max="3.5" step="0.01">
+    <span class="error" id="Si-error"></span><br><br>
+
+    <h1>K Range: 1.4 to 1.6</h1>
+    K: <input type="number" id="K" name="K" required min="1.4" max="1.6" step="0.01">
+    <span class="error" id="K-error"></span><br><br>
+
+    <h1>Ca Range: 1.8 to 2.0</h1>
+    Ca: <input type="number" id="Ca" name="Ca" required min="1.8" max="2.0" step="0.01">
+    <span class="error" id="Ca-error"></span><br><br>
+
+    <h1>Ba Range: 1.5 to 1.7</h1>
+    Ba: <input type="number" id="Ba" name="Ba" required min="1.5" max="1.7" step="0.01">
+    <span class="error" id="Ba-error"></span><br><br>
+
+    <h1>Fe Range: 2.4 to 2.5</h1>
+    Fe: <input type="number" id="Fe" name="Fe" required min="2.4" max="2.5" step="0.01">
+    <span class="error" id="Fe-error"></span><br><br>
 
     <input type="submit" value="Submit">
   </form>
+
+  <script>
+    function validateForm() {
+      let isValid = true;
+
+      // Function to clear errors
+      function clearError(id) {
+        document.getElementById(id + '-error').textContent = '';
+      }
+
+      // Function to show errors
+      function showError(id, message) {
+        document.getElementById(id + '-error').textContent = message;
+        isValid = false;
+      }
+
+      // Validate each input field
+      let fields = ['RI', 'Na', 'Mg', 'Al', 'Si', 'K', 'Ca', 'Ba', 'Fe'];
+
+      fields.forEach(function(field) {
+        let value = document.getElementById(field).value;
+
+        // Check if the value is not a number, negative, or out of range
+        if (isNaN(value) || value < document.getElementById(field).min || value > document.getElementById(field).max) {
+          showError(field, `Please enter a valid number between ${document.getElementById(field).min} and ${document.getElementById(field).max}`);
+        } else {
+          clearError(field);
+        }
+      });
+
+      return isValid; // If any field is invalid, the form will not be submitted
+    }
+  </script>
+
 </body>
 </html>
 
 
-<!-- <html lang="en" dir="ltr">
+{% comment %} <html lang="en" dir="ltr">
 <head>
   <meta charset="utf-8">
   <title>Home Page</title>
+  <style>
+    .error {
+      color: red;
+    }
+  </style>
 </head>
 <body>
-  <h1>HOME PAGE</h1>
+
+  <form action="{% url 'result' %}" method="POST" onsubmit="return validateForm()">
+    {% csrf_token %}
+
+    <h1>RI Range: 1.0 to 3.5</h1>
+    RI: <input type="number" id="RI" name="RI" required min="1.0" max="3.5" step="0.01">
+    <span class="error" id="RI-error"></span><br><br>
+
+    <h1>Na Range: 1.3 to 1.5</h1>
+    Na: <input type="number" id="Na" name="Na" required min="1.3" max="1.5" step="0.01">
+    <span class="error" id="Na-error"></span><br><br>
+
+    <h1>Mg Range: 1.4 to 1.7</h1>
+    Mg: <input type="number" id="Mg" name="Mg" required min="1.4" max="1.7" step="0.01">
+    <span class="error" id="Mg-error"></span><br><br>
+
+    <h1>Al Range: 1.75 to 1.78</h1>
+    Al: <input type="number" id="Al" name="Al" required min="1.75" max="1.78" step="0.01">
+    <span class="error" id="Al-error"></span><br><br>
+
+    <h1>Si Range: 3.4 to 3.5</h1>
+    Si: <input type="number" id="Si" name="Si" required min="3.4" max="3.5" step="0.01">
+    <span class="error" id="Si-error"></span><br><br>
+
+    <h1>K Range: 1.4 to 1.6</h1>
+    K: <input type="number" id="K" name="K" required min="1.4" max="1.6" step="0.01">
+    <span class="error" id="K-error"></span><br><br>
+
+    <h1>Ca Range: 1.8 to 2.0</h1>
+    Ca: <input type="number" id="Ca" name="Ca" required min="1.8" max="2.0" step="0.01">
+    <span class="error" id="Ca-error"></span><br><br>
+
+    <h1>Ba Range: 1.5 to 1.7</h1>
+    Ba: <input type="number" id="Ba" name="Ba" required min="1.5" max="1.7" step="0.01">
+    <span class="error" id="Ba-error"></span><br><br>
+
+    <h1>Fe Range: 2.4 to 2.5</h1>
+    Fe: <input type="number" id="Fe" name="Fe" required min="2.4" max="2.5" step="0.01">
+    <span class="error" id="Fe-error"></span><br><br>
+
+    <input type="submit" value="Submit">
+  </form>
+
+  <script>
+    function validateForm() {
+      let isValid = true;
+
+      // Function to clear errors
+      function clearError(id) {
+        document.getElementById(id + '-error').textContent = '';
+      }
+
+      // Function to show errors
+      function showError(id, message) {
+        document.getElementById(id + '-error').textContent = message;
+        isValid = false;
+      }
+
+      // Validate each input field
+      let fields = ['RI', 'Na', 'Mg', 'Al', 'Si', 'K', 'Ca', 'Ba', 'Fe'];
+
+      fields.forEach(function(field) {
+        let value = document.getElementById(field).value;
+
+        // Check if the value is not a number, negative, or out of range
+        if (isNaN(value) || value < document.getElementById(field).min || value > document.getElementById(field).max) {
+          showError(field, `Please enter a valid number between ${document.getElementById(field).min} and ${document.getElementById(field).max}`);
+        } else {
+          clearError(field);
+        }
+      });
+
+      return isValid; // If any field is invalid, the form will not be submitted
+    }
+  </script>
+
+</body>
+</html> {% endcomment %}
+
+
+{% comment %} <html lang="en" dir="ltr">
+<head>
+  <meta charset="utf-3">
+  <title>Home Page</title>
+</head>
+<body>
 
   <form action="{% url 'result' %}" method="POST">
     {% csrf_token %}
 
     RI: <input type="text" required name="RI"> <br><br>
+    <h1>Enter the referactive Indexes of Materials</h1>
+
     Na: <input type="text" required name="Na"> <br><br>
     Mg: <input type="text" required name="Mg"> <br><br>
     Al: <input type="text" required name="Al"> <br><br>
@@ -49,4 +209,6 @@
     <input type="submit" value="Submit">
   </form>
 </body>
-</html> -->
+</html> {% endcomment %}
+
+
